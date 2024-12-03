@@ -1,104 +1,82 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
+
+{% block title %}
   <title>NT Customer Service</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+{% endblock %}
 
-  <!-- Navbar Section -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <img src="https://www.ntplc.co.th/ResourcePackages/ntplc/assets/dist/images/sub-header-logo.png" alt="NT Logo" class="logo img-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="{% url 'main' %}">ข้อมูลลูกค้า</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">ข้อมูลบิลลูกค้า</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">หน้าแดชบอร์ด</a>
-          </li>
-        </ul>
-      </div>
+{% block content %}
+<div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <form method="get" class="d-flex align-items-center">
+            <div class="me-2">
+                <select name="customer_type" class="form-select" onchange="this.form.submit()">
+                    <option value="-- ทั้งหมด --" {% if selected_customer_type == '-- ทั้งหมด --' %}selected{% endif %}>-- ทั้งหมด --</option>
+                    <option value="เทศบาลเมือง" {% if selected_customer_type == 'เทศบาลเมือง' %}selected{% endif %}>เทศบาลเมือง</option>
+                    <option value="เทศบาลตำบล" {% if selected_customer_type == 'เทศบาลตำบล' %}selected{% endif %}>เทศบาลตำบล</option>
+                    <option value="องค์กรบริหารส่วนตำบล" {% if selected_customer_type == 'องค์กรบริหารส่วนตำบล' %}selected{% endif %}>องค์กรบริหารส่วนตำบล</option>
+                    <option value="องค์การบริหารส่วนจังหวัด" {% if selected_customer_type == 'องค์การบริหารส่วนจังหวัด' %}selected{% endif %}>องค์การบริหารส่วนจังหวัด</option>
+                </select>
+            </div>
+
+            <div class="me-2">
+                <select name="district" class="form-select" onchange="this.form.submit()">
+                    <option value="-- อำเภอ --" {% if selected_district == '-- อำเภอ --' %}selected{% endif %}>-- อำเภอ --</option>
+                    <option value="อำเภอเมืองกาญจนบุรี" {% if selected_district == 'อำเภอเมืองกาญจนบุรี' %}selected{% endif %}>อำเภอเมืองกาญจนบุรี</option>
+                    <option value="อำเภอท่ามะกา" {% if selected_district == 'อำเภอท่ามะกา' %}selected{% endif %}>อำเภอท่ามะกา</option>
+                    <option value="อำเภอท่าม่วง" {% if selected_district == 'อำเภอท่าม่วง' %}selected{% endif %}>อำเภอท่าม่วง</option>
+                    <option value="อำเภอพนมทวน" {% if selected_district == 'อำเภอพนมทวน' %}selected{% endif %}>อำเภอพนมทวน</option>
+                    <option value="อำเภอเลาขวัญ" {% if selected_district == 'อำเภอเลาขวัญ' %}selected{% endif %}>อำเภอเลาขวัญ</option>
+                    <option value="อำเภอศรีสวัสดิ์" {% if selected_district == 'อำเภอศรีสวัสดิ์' %}selected{% endif %}>อำเภอศรีสวัสดิ์</option>
+                    <option value="อำเภอไทรโยค" {% if selected_district == 'อำเภอไทรโยค' %}selected{% endif %}>อำเภอไทรโยค</option>
+                    <option value="อำเภอห้วยกระเจา" {% if selected_district == 'อำเภอห้วยกระเจา' %}selected{% endif %}>อำเภอห้วยกระเจา</option>
+                    <option value="อำเภอทองผาภูมิ" {% if selected_district == 'อำเภอทองผาภูมิ' %}selected{% endif %}>อำเภอทองผาภูมิ</option>
+                    <option value="อำเภอสังขละบุรี" {% if selected_district == 'อำเภอสังขละบุรี' %}selected{% endif %}>อำเภอสังขละบุรี</option>
+                    <option value="อำเภอบ่อพลอย" {% if selected_district == 'อำเภอบ่อพลอย' %}selected{% endif %}>อำเภอบ่อพลอย</option>
+                    <option value="อำเภอหนองปรือ" {% if selected_district == 'อำเภอหนองปรือ' %}selected{% endif %}>อำเภอหนองปรือ</option>
+                    <option value="อำเภอด่านมะขามเตี้ย" {% if selected_district == 'อำเภอด่านมะขามเตี้ย' %}selected{% endif %}>อำเภอด่านมะขามเตี้ย</option>
+                </select>
+            </div>
+
+            <div class="me-2">
+                <a href="{% url 'add_customer' %}" class="btn btn-success">เพิ่มข้อมูลลูกค้า</a>
+            </div>
+        </form>
     </div>
-  </nav>
 
-  <!-- Title Section -->
-  <div class="text-center my-4">
-    <h2>ศูนย์ขายและวิศวกรรมบริการ</h2>
-    <h3>ส่วนบริการลูกค้าจังหวัดกาญจนบุรี</h3>
-    <h3>บริษัทโทรคมนาคมแห่งชาติ จำกัด(มหาชน)</h3>
-  </div>
-
-  <!-- Search and Add New Customer Buttons -->
-  <div class="container mb-4">
-    <div class="d-flex justify-content-between">
-      <!-- Search Form -->
-      <form method="GET" action="{% url 'main' %}" class="d-flex w-50">
-        <div class="me-2">
-          <select name="customer_type" class="form-select">
-            <option value="">-- ทั้งหมด --</option>
-            <option value="เทศบาลเมือง" {% if request.GET.customer_type == "เทศบาลเมือง" %}selected{% endif %}>เทศบาลเมือง</option>
-            <option value="เทศบาลตำบล" {% if request.GET.customer_type == "เทศบาลตำบล" %}selected{% endif %}>เทศบาลตำบล</option>
-            <option value="องค์กรบริหารส่วนตำบล" {% if request.GET.customer_type == "องค์กรบริหารส่วนตำบล" %}selected{% endif %}>องค์กรบริหารส่วนตำบล</option>
-            <option value="องค์การบริหารส่วนจังหวัด" {% if request.GET.customer_type == "องค์การบริหารส่วนจังหวัด" %}selected{% endif %}>องค์การบริหารส่วนจังหวัด</option>
-          </select>
-        </div>
-        <div class="me-2">
-          <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-      </form>
-
-      <!-- Add New Customer Button -->
-      <a href="{% url 'add_customer' %}" class="btn btn-success">Add New Customer</a>
+    <div class="container mt-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ชื่อลูกค้า</th>
+                    <th>ประเภทลูกค้า</th>
+                    <th>ที่อยู่</th>
+                    <th>เบอร์โทรศัพท์ผู้ติดต่อ</th>
+                    <th>สถานะ</th>
+                    <th>จัดการข้อมูล</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.get_customer_type_display }}</td>
+                    <td>{{ customer.address.district }}, {{ customer.address.subdistrict }}</td>
+                    <td>{{ customer.phone_number }}</td>
+                    <td>{{ customer.get_status_display }}</td>
+                    <td>
+                        <a href="{% url 'edit_customer' pk=customer.pk %}" class="btn btn-warning btn-sm">แก้ไขข้อมูล</a> |
+                        <a href="{% url 'delete_customer' pk=customer.pk %}" class="btn btn-danger btn-sm" 
+                           onclick="return confirm('Are you sure you want to delete this customer?')">ลบข้อมูล</a> |
+                        <a href="{% url 'bill' %}" class="btn btn-info btn-sm">ดูรายละเอียดบิล</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No customers found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-  </div>
-
-  <!-- Customer Table -->
-  <div class="container">
-    <table class="table table-striped table-bordered table-hover">
-      <thead  class="table-dark">
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Customer Type</th>
-          <th scope="col">Address</th>
-          <th scope="col">Phone Number</th>
-          <th scope="col">Status</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for customer in customers %}
-        <tr>
-          <td>{{ customer.name }}</td>
-          <td>{{ customer.get_customer_type_display }}</td>  <!-- แสดงค่าที่อ่านได้จาก Enum -->
-          <td>{{ customer.address }}</td>
-          <td>{{ customer.phone_number }}</td>
-          <td>{{ customer.get_status_display }}</td>  <!-- แสดงค่าที่อ่านได้จาก Enum -->
-          <td>
-            <a href="{% url 'edit_customer' pk=customer.pk %}" class="btn btn-warning btn-sm">Edit</a> |
-            <a href="{% url 'delete_customer' pk=customer.pk %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this customer?')">Delete</a>
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="6" class="text-center">No customers found.</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-
-  <!-- ลิงก์ไปยัง Bootstrap 5.0.2 JS และ Popper.js -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-</body>
-</html>
+</div>
+{% endblock %}

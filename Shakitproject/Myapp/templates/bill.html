@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>NT Customer Service</title>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <!-- Heading -->
+  <h2 class="mb-4 text-center text-primary">ข้อมูลลูกค้า</h2>
+
+  <!-- Main Layout: Sidebar and Table -->
+  <div class="row">
+    <!-- Sidebar Filter -->
+    <div class="col-md-3">
+      <div class="card shadow-sm rounded-3 p-4">
+        <h5 class="card-title mb-4 text-center">ตัวกรอง</h5>
+        <form method="GET" action="#">
+          <div class="mb-3">
+            <label for="customerType" class="form-label">อำเภอ</label>
+            <select class="form-select form-control-sm" id="customerType" name="customer_type">
+              <option value="">ทั้งหมด</option>
+              <option value="1" {% if request.GET.customer_type == "1" %}selected{% endif %}>อำเภอเมืองกาญจนบุรี</option>
+              <option value="2" {% if request.GET.customer_type == "2" %}selected{% endif %}>อำเภอทองผาภูมิ</option>
+              <option value="3" {% if request.GET.customer_type == "3" %}selected{% endif %}>อำเภอท่าม่วง</option>
+              <option value="4" {% if request.GET.customer_type == "4" %}selected{% endif %}>อำเภอท่ามะกา</option>
+              <option value="5" {% if request.GET.customer_type == "5" %}selected{% endif %}>อำเภอไทรโยค</option>
+              <option value="6" {% if request.GET.customer_type == "6" %}selected{% endif %}>อำเภอบ่อพลอย</option>
+              <option value="7" {% if request.GET.customer_type == "7" %}selected{% endif %}>อำเภอพนมทวน</option>
+              <option value="8" {% if request.GET.customer_type == "8" %}selected{% endif %}>อำเภอเลาขวัญ</option>
+              <option value="9" {% if request.GET.customer_type == "9" %}selected{% endif %}>อำเภอศรีสวัสดิ์</option>
+              <option value="10" {% if request.GET.customer_type == "10" %}selected{% endif %}>อำเภอสังขละบุรี</option>
+              <option value="11" {% if request.GET.customer_type == "11" %}selected{% endif %}>อำเภอด่านมะขามเตี้ย</option>
+              <option value="12" {% if request.GET.customer_type == "12" %}selected{% endif %}>อำเภอหนองปรือ</option>
+              <option value="13" {% if request.GET.customer_type == "13" %}selected{% endif %}>อำเภอห้วยกระเจา</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-2">ค้นหาข้อมูล</button>
+        </form>
+
+        <!-- Additional Filter Buttons -->
+        <div class="btn-group-vertical w-100 mt-4" role="group" aria-label="Filter Buttons">
+          <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2">หน่วยงานราชการ</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2">บริษัทเอกชน</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2">โรงแรมและรีสอร์ท</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2">สนามกอล์ฟ</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2">ห้างสรรพสินค้าและร้านค้า</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2">มูลนิธิและองค์กรการกุศล</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2">อื่นๆ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content (Table Section) -->
+    <div class="col-md-9">
+      <!-- Dropdown and Search Form (Outside Sidebar) -->
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <!-- Filter Buttons -->
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+          อปท.
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">อบจ.กาญจนบุรี</a></li>
+          <li><a class="dropdown-item" href="#">อบต.กาญจนบุรี</a></li>
+          <li><a class="dropdown-item" href="#">เทศบาลเมือง</a></li>
+          <li><a class="dropdown-item" href="#">เทศบาลตำบล</a></li>
+        </ul>
+
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+          สถานศึกษา
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">โรงเรียนประถมศึกษา</a></li>
+          <li><a class="dropdown-item" href="#">โรงเรียนมัธยม</a></li>
+          <li><a class="dropdown-item" href="#">โรงเรียนเอกชน</a></li>
+          <li><a class="dropdown-item" href="#">สำนักงานพื้นที่เขตการศึกษา</a></li>
+          <li><a class="dropdown-item" href="#">วิทยาลัย</a></li>
+          <li><a class="dropdown-item" href="#">มหาวิทยาลัย</a></li>
+        </ul>
+
+        <!-- Search Form -->
+        <form class="d-flex" role="search" method="GET" action="#">
+          <input class="form-control form-control-sm" type="search" placeholder="ค้นหา..." aria-label="Search" name="query">
+          <button class="btn btn-outline-primary btn-sm" type="submit">ค้นหา</button>
+        </form>
+      </div>
+
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover mt-4">
+          <thead class="table-info">
+            <tr>
+              <th>ลำดับ</th>
+              <th>ประเภทลูกค้า</th>
+              <th>อำเภอ</th>
+              <th>ชื่อ</th>
+              <th>ชื่อลูกค้า</th>
+              <th>เบอร์โทรผู้ติดต่อ</th>
+              <th>รหัสบิล</th>
+              <th>ค่าบริการ</th>
+              <th>รายละเอียด</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for customer in customers %}
+            <tr>
+              <td>{{ customer.name }}</td>
+              <td>{{ customer.get_customer_type_display }}</td>
+              <td>{{ customer.address.district }}</td>
+              <td>{{ customer.phone_number }}</td>
+              <td>{{ customer.get_status_display }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="9" class="text-center">ไม่พบข้อมูลลูกค้า</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center mt-4">
+      <li class="page-item {% if not customers.has_previous %}disabled{% endif %}">
+        <a class="page-link" href="#">ก่อนหน้า</a>
+      </li>
+      {% for page_num in customers.paginator.page_range %}
+      <li class="page-item {% if customers.number == page_num %}active{% endif %}">
+        <a class="page-link" href="#">{{ page_num }}</a>
+      </li>
+      {% endfor %}
+      <li class="page-item {% if not customers.has_next %}disabled{% endif %}">
+        <a class="page-link" href="#">ถัดไป</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+{% endblock %}

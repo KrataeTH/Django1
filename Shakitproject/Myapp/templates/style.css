@@ -1,0 +1,67 @@
+/* Font */
+body {
+    font-family: 'Noto Sans Thai', sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+  /* Header Styles */
+  .navbar {
+    text-align: center;
+  }
+  
+  .logo {
+    max-width: 350px;
+    height: auto;
+    display: inline-block;
+  }
+  
+  /* Center Text */
+  .text-center h2, .text-center h3 {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Customer Table Styles */
+  .customer-table {
+    padding: 2rem;
+    background-color: #f9f9f9;
+  }
+  
+  .customer-table h2 {
+    font-size: 1.8rem;
+    color: #000;
+    margin-bottom: 1rem;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  th, td {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #c5b933;
+    color: #000;
+    font-weight: bold;
+  }
+  
+  td {
+    color: #333;
+  }
+  
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
